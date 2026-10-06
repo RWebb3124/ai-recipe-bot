@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  chat: one
+  title: MyString
+  description: MyText
+  instructions: 
+  prep_minutes: 1
+  cook_minutes: 1
+  servings: 1
+  calories: 1
+  protein_g: 9.99
+  carbs_g: 9.99
+  fat_g: 9.99
+
+two:
+  chat: two
+  title: MyString
+  description: MyText
+  instructions: 
+  prep_minutes: 1
+  cook_minutes: 1
+  servings: 1
+  calories: 1
+  protein_g: 9.99
+  carbs_g: 9.99
+  fat_g: 9.99
