@@ -30,6 +30,8 @@ gem "ruby_llm"
 gem "kramdown"
 gem "rouge"
 gem "kramdown-parser-gfm"
+gem "bootstrap"
+gem "sassc-rails"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
