@@ -16,7 +16,7 @@ class SavedRecipesController < ApplicationController
     saved_recipe = current_user.saved_recipes.find(params[:id])
 
     if saved_recipe.update(saved_recipe_params)
-      redirect_to saved_recipes_path, notice: "Updated.", status: :see_other
+      redirect_to saved_recipes_path(anchor: helpers.dom_id(saved_recipe)), notice: "Updated.", status: :see_other
     else
       redirect_to saved_recipes_path,
                   alert: saved_recipe.errors.full_messages.to_sentence,

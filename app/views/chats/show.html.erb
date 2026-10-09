@@ -1,9 +1,25 @@
-<h1>Recipes with: <%= @chat.ingredients_input %></h1>
+<div class="container my-4" style="max-width: 800px;">
+  <div class="mb-3 small">
+    <%= link_to "← New search", root_path %>
+  </div>
 
-<%= render partial: "messages/message", collection: @follow_ups, as: :message %>
+  <h1 class="h3 mb-2">Recipes from what you have</h1>
+  <div class="mb-4 d-flex flex-wrap gap-2">
+    <% @chat.ingredients_input.to_s.split(/[,\n]/).map(&:strip).compact_blank.each do |item| %>
+      <span class="badge bg-light text-dark border"><%= item %></span>
+    <% end %>
+  </div>
 
-<% @recipes.each do |recipe| %>
-  <%= render "recipes/recipe", recipe: recipe, saved: @saved_recipe_ids.include?(recipe.id) %>
-<% end %>
+  <%# Follow-up requests the user has made in this chat %>
+  <%= render partial: "messages/message", collection: @follow_ups, as: :message %>
 
-<%= render "messages/form", chat: @chat %>
+  <% if @recipes.any? %>
+    <% @recipes.each do |recipe| %>
+      <%= render "recipes/recipe", recipe: recipe, saved: @saved_recipe_ids.include?(recipe.id) %>
+    <% end %>
+  <% else %>
+    <p class="text-muted">No recipes yet.</p>
+  <% end %>
+
+  <%= render "messages/form", chat: @chat %>
+</div>

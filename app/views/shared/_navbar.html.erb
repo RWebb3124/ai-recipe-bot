@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand navbar-light bg-white border-bottom">
+  <div class="container">
+    <%= link_to "Recipe Helper", root_path, class: "navbar-brand" %>
+
+    <% if user_signed_in? %>
+      <div class="d-flex align-items-center gap-3">
+        <%= link_to "New search", root_path %>
+        <%= link_to "History", chats_path %>
+        <% link_to "Saved", saved_recipes_path %>
+        <% link_to "Pantry", pantry_items_path %>
+        <%= button_to "Log out", destroy_user_session_path, method: :delete,
+              class: "btn btn-sm btn-outline-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</nav>

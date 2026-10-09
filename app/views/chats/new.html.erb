@@ -1,0 +1,24 @@
+<div class="container my-5" style="max-width: 720px;">
+  <h1 class="mb-2">What's in your kitchen?</h1>
+  <p class="text-muted mb-4">
+    List what you have and I'll suggest recipes you can make.
+  </p>
+
+  <%= form_with model: @chat, url: chats_path do |f| %>
+    <div class="mb-3">
+      <%= f.label :ingredients_input, "Ingredients", class: "form-label fw-semibold" %>
+      <%= f.text_area :ingredients_input, rows: 5, required: true, class: "form-control",
+            placeholder: "eggs, spinach, feta, tortillas" %>
+      <div class="form-text">Separate with commas or new lines.</div>
+    </div>
+
+    <div class="mb-4">
+      <%= label_tag :preferences, "Anything else? (optional)", class: "form-label" %>
+      <%= text_field_tag :preferences, params[:preferences], class: "form-control",
+            placeholder: "vegetarian, under 30 minutes, no oven" %>
+    </div>
+
+    <%= f.submit "Find recipes", class: "btn btn-primary btn-lg",
+          data: { turbo_submits_with: "Cooking up ideas..." } %>
+  <% end %>
+</div>

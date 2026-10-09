@@ -1,0 +1,41 @@
+<div class="container my-4" style="max-width: 800px;">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">My pantry</h1>
+    <% if @pantry_items.any? %>
+      <%= link_to "Find recipes with these", root_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <%= render "form", pantry_item: PantryItem.new %>
+    </div>
+  </div>
+
+  <% if @pantry_items.any? %>
+    <ul class="list-group">
+      <% @pantry_items.each do |item| %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>
+            <%= item.name %>
+            <% amount = [format_amount(item.quantity), item.unit].compact_blank.join(" ") %>
+            <% if amount.present? %>
+              <span class="text-muted ms-2"><%= amount %></span>
+            <% end %>
+          </span>
+
+          <span class="d-flex gap-2">
+            <%= link_to "Edit", edit_pantry_item_path(item), class: "btn btn-sm btn-outline-secondary" %>
+            <%= button_to "Delete", pantry_item_path(item), method: :delete,
+                  class: "btn btn-sm btn-outline-danger" %>
+          </span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-muted">
+      Nothing here yet. Add what you keep in the kitchen and it will be
+      prefilled on the homepage whenever you want recipe ideas.
+    </p>
+  <% end %>
+</div>

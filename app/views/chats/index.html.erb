@@ -1,0 +1,21 @@
+<div class="container my-4" style="max-width: 800px;">
+  <h1 class="h3 mb-4">Past searches</h1>
+
+  <% if @chats.any? %>
+    <div class="list-group">
+      <% @chats.each do |chat| %>
+        <%= link_to chat_path(chat), class: "list-group-item list-group-item-action" do %>
+          <div class="d-flex justify-content-between">
+            <span><%= truncate(chat.ingredients_input.to_s, length: 80) %></span>
+            <small class="text-muted"><%= time_ago_in_words(chat.created_at) %> ago</small>
+          </div>
+          <small class="text-muted"><%= pluralize(chat.recipes.size, "recipe") %></small>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-muted">
+      Nothing yet. <%= link_to "Start your first search", root_path %>.
+    </p>
+  <% end %>
+</div>

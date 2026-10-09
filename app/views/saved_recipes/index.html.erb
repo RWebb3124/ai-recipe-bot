@@ -1,0 +1,13 @@
+<div class="container my-4" style="max-width: 800px;">
+  <h1 class="h3 mb-4">My saved recipes</h1>
+
+  <% if @saved_recipes.any? %>
+    <%= render partial: "saved_recipes/saved_recipe",
+               collection: @saved_recipes, as: :saved_recipe %>
+  <% else %>
+    <p class="text-muted">
+      You haven't saved any recipes yet.
+      <%= link_to "Find something to cook", root_path %>.
+    </p>
+  <% end %>
+</div>

@@ -1,0 +1,8 @@
+<div class="container my-4" style="max-width: 800px;">
+  <div class="mb-3 small">
+    <%= link_to "← Back to pantry", pantry_items_path %>
+  </div>
+
+  <h1 class="h3 mb-4">Edit <%= @pantry_item.name_was %></h1>
+  <%= render "form", pantry_item: @pantry_item %>
+</div>

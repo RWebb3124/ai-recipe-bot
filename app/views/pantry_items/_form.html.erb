@@ -1,0 +1,40 @@
+<%# locals: pantry_item %>
+<%= form_with model: pantry_item do |f| %>
+  <% if pantry_item.errors.any? %>
+    <div class="alert alert-danger">
+      <%= pantry_item.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="row g-2 align-items-end">
+    <div class="col-12 col-md-5">
+      <%= f.label :name, "Item", class: "form-label small" %>
+      <%= f.text_field :name, required: true, class: "form-control",
+            placeholder: "e.g. eggs, spinach, rice" %>
+    </div>
+
+    <div class="col-6 col-md-2">
+      <%= f.label :quantity, "Amount", class: "form-label small" %>
+      <%= f.number_field :quantity, step: "any", min: 0, class: "form-control",
+            value: format_amount(pantry_item.quantity) %>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <%= f.label :unit, "Unit", class: "form-label small" %>
+      <%= f.text_field :unit, list: "pantry-units", class: "form-control",
+            placeholder: "optional" %>
+      <datalist id="pantry-units">
+        <% %w[pcs g kg ml l cup tbsp tsp oz lb can pack].each do |unit| %>
+          <option value="<%= unit %>"></option>
+        <% end %>
+      </datalist>
+    </div>
+
+    <div class="col-12 col-md-2 d-flex gap-2">
+      <%= f.submit pantry_item.new_record? ? "Add" : "Update", class: "btn btn-primary flex-grow-1" %>
+      <% unless pantry_item.new_record? %>
+        <%= link_to "Cancel", pantry_items_path, class: "btn btn-outline-secondary" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
