@@ -1,0 +1,9 @@
+<h1>Recipes with: <%= @chat.ingredients_input %></h1>
+
+<%= render partial: "messages/message", collection: @follow_ups, as: :message %>
+
+<% @recipes.each do |recipe| %>
+  <%= render "recipes/recipe", recipe: recipe, saved: @saved_recipe_ids.include?(recipe.id) %>
+<% end %>
+
+<%= render "messages/form", chat: @chat %>

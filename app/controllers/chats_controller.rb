@@ -40,6 +40,7 @@ class ChatsController < ApplicationController
 
   def show
     @recipes = @chat.recipes.includes(:recipe_ingredients).order(:id)
+    @follow_ups = @chat.messages.where(role: "user").order(:id).to_a.drop(1)
     @saved_recipe_ids = current_user.saved_recipes
                                     .where(recipe_id: @recipes.map(&:id))
                                     .pluck(:recipe_id)

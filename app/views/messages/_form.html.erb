@@ -1,0 +1,7 @@
+<%= form_with url: chat_messages_path(chat), class: "mt-4" do |f| %>
+  <%= f.label :content, "Ask for a change", class: "form-label" %>
+  <%= f.text_field :content, required: true, class: "form-control mb-2",
+        placeholder: "Make it vegetarian, no oven, under 20 minutes..." %>
+  <%= f.submit "Ask", class: "btn btn-primary",
+        data: { turbo_submits_with: "Thinking..." } %>
+<% end %>

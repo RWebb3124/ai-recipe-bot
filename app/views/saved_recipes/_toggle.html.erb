@@ -1,0 +1,8 @@
+<%# locals: recipe, saved (boolean) %>
+<% if saved %>
+  <%= button_to "Saved ✓", recipe_saved_recipe_path(recipe),
+        method: :delete, class: "btn btn-sm btn-success" %>
+<% else %>
+  <%= button_to "Save recipe", recipe_saved_recipe_path(recipe),
+        method: :post, class: "btn btn-sm btn-outline-primary" %>
+<% end %>

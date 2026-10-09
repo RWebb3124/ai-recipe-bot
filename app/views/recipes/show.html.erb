@@ -1,0 +1,84 @@
+<div class="container my-4">
+  <div class="mb-3 small">
+    <%= link_to "← Back to results", chat_path(@recipe.chat) %>
+    <span class="text-muted mx-2">|</span>
+    <%= link_to "My saved recipes", saved_recipes_path %>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-start gap-3">
+    <h1 class="mb-1"><%= @recipe.title %></h1>
+    <%= render "saved_recipes/toggle", recipe: @recipe, saved: @saved_recipe.present? %>
+  </div>
+
+  <p class="lead text-muted"><%= @recipe.description %></p>
+
+  <div class="d-flex flex-wrap gap-4 mb-4 text-muted">
+    <% if @recipe.prep_minutes.present? %>
+      <span>Prep: <%= @recipe.prep_minutes %> min</span>
+    <% end %>
+    <% if @recipe.cook_minutes.present? %>
+      <span>Cook: <%= @recipe.cook_minutes %> min</span>
+    <% end %>
+    <% if @recipe.servings.present? %>
+      <span>Serves: <%= @recipe.servings %></span>
+    <% end %>
+  </div>
+
+  <% if @saved_recipe&.notes.present? %>
+    <div class="alert alert-light border">
+      <strong>Your notes:</strong> <%= @saved_recipe.notes %>
+    </div>
+  <% end %>
+
+  <div class="row g-4">
+    <div class="col-md-5">
+      <h2 class="h4">Ingredients</h2>
+      <ul class="list-unstyled">
+        <% @recipe.recipe_ingredients.each do |ingredient| %>
+          <li class="mb-2">
+            <%= [format_amount(ingredient.quantity), ingredient.unit].compact_blank.join(" ") %>
+            <%= ingredient.name %>
+            <% unless ingredient.in_pantry? %>
+              <span class="badge bg-warning text-dark ms-1">need</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="col-md-7">
+      <h2 class="h4">Instructions</h2>
+      <ol class="ps-3">
+        <% Array(@recipe.instructions).each do |step| %>
+          <li class="mb-2"><%= step %></li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+
+  <% if @recipe.calories.present? %>
+    <hr class="my-4">
+    <h2 class="h4">Estimated nutrition <span class="h6 text-muted">per serving</span></h2>
+    <div class="row text-center g-3 my-1">
+      <div class="col-6 col-md-3">
+        <div class="fs-4"><%= @recipe.calories %></div>
+        <div class="small text-muted">kcal</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="fs-4"><%= format_amount(@recipe.protein_g, precision: 1) || "-" %><small>g</small></div>
+        <div class="small text-muted">protein</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="fs-4"><%= format_amount(@recipe.carbs_g, precision: 1) || "-" %><small>g</small></div>
+        <div class="small text-muted">carbs</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="fs-4"><%= format_amount(@recipe.fat_g, precision: 1) || "-" %><small>g</small></div>
+        <div class="small text-muted">fat</div>
+      </div>
+    </div>
+    <p class="small text-muted mt-3">
+      Nutrition figures are AI-generated estimates, not exact values.
+    </p>
+  <% end %>
+</div>

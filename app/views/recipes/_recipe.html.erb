@@ -1,0 +1,32 @@
+<%# locals: recipe, saved (boolean) %>
+<% missing = recipe.missing_ingredients.size %>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start gap-3">
+      <h5 class="card-title mb-1">
+        <%= link_to recipe.title, recipe_path(recipe), class: "text-decoration-none" %>
+      </h5>
+      <%= render "saved_recipes/toggle", recipe: recipe, saved: saved %>
+    </div>
+
+    <p class="card-text text-muted mb-2"><%= recipe.description %></p>
+
+    <div class="small text-muted d-flex flex-wrap gap-3">
+      <% if recipe.total_minutes.positive? %>
+        <span>⏱ <%= recipe.total_minutes %> min</span>
+      <% end %>
+      <% if recipe.servings.present? %>
+        <span>🍽 Serves <%= recipe.servings %></span>
+      <% end %>
+      <% if recipe.calories.present? %>
+        <span>🔥 ~<%= recipe.calories %> kcal / serving</span>
+      <% end %>
+      <% if missing.zero? %>
+        <span class="text-success">You have everything</span>
+      <% else %>
+        <span class="text-warning">Need <%= pluralize(missing, "more ingredient") %></span>
+      <% end %>
+    </div>
+  </div>
+</div>

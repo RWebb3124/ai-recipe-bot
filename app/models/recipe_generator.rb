@@ -13,6 +13,8 @@ class RecipeGenerator < ApplicationRecord
     Keep any extra ingredients to a minimum.
     Give exact numeric amounts for every ingredient and short, clear steps.
     Nutrition values are rough estimates per serving.
+    If the user sends a follow-up request, suggest #{RECIPE_COUNT} new recipes
+    that take it into account, and don't repeat recipes already suggested.
   PROMPT
 
   def initialize(chat)
@@ -26,12 +28,7 @@ class RecipeGenerator < ApplicationRecord
   end
 
   def refine(request)
-    generate(<<~PROMPT)
-      Follow-up from the user: #{request}
-
-      Suggest #{RECIPE_COUNT} new recipes that take this into account.
-      Don't repeat recipes you already suggested in this conversation.
-    PROMPT
+    generate(request)
   end
 
   private
