@@ -1,5 +1,4 @@
 module SavedRecipesHelper
-  module SavedRecipesHelper
   def stars(rating)
     return "" if rating.blank?
 
@@ -9,5 +8,4 @@ module SavedRecipesHelper
   def rating_options
     (1..5).map { |n| [stars(n), n] }
   end
-end
 end
