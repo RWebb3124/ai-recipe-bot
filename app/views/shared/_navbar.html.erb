@@ -1,16 +1,23 @@
-<nav class="navbar navbar-expand navbar-light bg-white border-bottom">
-  <div class="container">
-    <%= link_to "Recipe Helper", root_path, class: "navbar-brand" %>
+<header class="app-navbar">
+  <nav class="app-navbar__inner" aria-label="Main">
+    <%= link_to root_path, class: "brand" do %>
+      <span class="brand-mark"><%= icon(:logo, size: 18) %></span>
+      Recipe Helper
+    <% end %>
 
     <% if user_signed_in? %>
-      <div class="d-flex align-items-center gap-3">
-        <%= link_to "New search", root_path %>
-        <%= link_to "History", chats_path %>
-        <%= link_to "Saved", saved_recipes_path %>
-        <%= link_to "Pantry", pantry_items_path %>
+      <div class="app-navbar__links">
+        <% [["New search", root_path, controller_name == "chats" && action_name == "new"],
+            ["History", chats_path, controller_name == "chats" && action_name == "index"],
+            ["Saved", saved_recipes_path, controller_name == "saved_recipes"],
+            ["Pantry", pantry_items_path, controller_name == "pantry_items"],
+            ["Account", edit_user_registration_path, controller_name == "registrations"]].each do |label, path, active| %>
+          <%= link_to label, path, class: ["app-navbar__link", ("active" if active)],
+                aria: { current: ("page" if active) } %>
+        <% end %>
         <%= button_to "Log out", destroy_user_session_path, method: :delete,
-              class: "btn btn-sm btn-outline-secondary" %>
+              class: "btn btn-pill btn-ghost" %>
       </div>
     <% end %>
-  </div>
-</nav>
+  </nav>
+</header>

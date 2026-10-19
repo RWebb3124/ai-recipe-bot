@@ -1,8 +1,14 @@
-<div class="container my-4" style="max-width: 800px;">
-  <div class="mb-3 small">
-    <%= link_to "← Back to pantry", pantry_items_path %>
-  </div>
+<% content_for :title, "Edit #{@pantry_item.name_was}" %>
 
-  <h1 class="h3 mb-4">Edit <%= @pantry_item.name_was %></h1>
-  <%= render "form", pantry_item: @pantry_item %>
-</div>
+<main class="page page--narrow">
+  <%= link_to pantry_items_path, class: "back-link" do %>
+    <%= icon(:arrow_left) %> Back to pantry
+  <% end %>
+
+  <h1 class="page-title mt-3">Edit <%= @pantry_item.name_was %></h1>
+  <p class="page-subtitle">Changes show up next time your pantry prefills a search.</p>
+
+  <div class="form-card">
+    <%= render "form", pantry_item: @pantry_item %>
+  </div>
+</main>

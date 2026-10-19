@@ -1,0 +1,62 @@
+// Bootstrap overrides, so stock components pick up the brand.
+
+$primary:   $plum-600;
+$secondary: $space-indigo;
+$success:   $cyan-700;
+$info:      $dark-cyan;
+$warning:   $light-bronze;
+$danger:    $red-700;
+$light:     $bronze-tint;
+$dark:      $space-indigo;
+
+$body-bg:              $mint-cream;
+$body-color:           $space-indigo;
+$body-secondary-color: $text-muted;
+$border-color:         $hairline;
+
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+$headings-font-family:   "Roboto", "Inter", system-ui, sans-serif;
+$headings-font-weight:   700;
+$headings-color:         $space-indigo;
+$line-height-base:       1.55;
+
+$link-color:            $plum-600;
+$link-hover-color:      $plum-700;
+$link-decoration:       none;
+$link-hover-decoration: underline;
+
+$border-radius:    0.75rem;
+$border-radius-sm: 0.5rem;
+$border-radius-lg: 1.125rem;
+
+$btn-font-weight:      600;
+$btn-padding-x:        1.5rem;
+$btn-padding-y:        0.625rem;
+$btn-padding-x-lg:     1.75rem;
+$btn-padding-y-lg:     0.8125rem;
+$btn-font-size-lg:     1rem;
+$btn-focus-box-shadow: 0 0 0 0.25rem rgba($dark-cyan, 0.45);
+
+$input-bg:                  $field-bg;
+$input-border-color:        $field-border;
+$input-color:               $space-indigo;
+$input-placeholder-color:   #7A7A8C;
+$input-padding-y:           0.6875rem;
+$input-padding-x:           0.875rem;
+$input-focus-border-color:  $dark-cyan;
+$focus-ring-color:          $focus-ring;
+$focus-ring-width:          0.1875rem;
+$form-label-font-weight:    500;
+$form-text-color:           $text-muted;
+$form-check-input-checked-bg-color:     $plum-600;
+$form-check-input-checked-border-color: $plum-600;
+
+$card-border-color:  $hairline;
+$card-border-radius: 1.125rem;
+$card-spacer-x:      1.625rem;
+$card-spacer-y:      1.5rem;
+$card-bg:            $white;
+
+$navbar-light-color:       $space-indigo;
+$navbar-light-hover-color: $plum-600;
+$navbar-light-active-color: $plum-600;

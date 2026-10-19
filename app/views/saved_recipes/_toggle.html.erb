@@ -1,8 +1,15 @@
-<%# locals: recipe, saved (boolean) %>
+<%# locals: recipe, saved (boolean), size (optional: :lg) %>
+<% size_class = local_assigns[:size] == :lg ? "btn-save-lg" : nil %>
 <% if saved %>
-  <%= button_to "Saved ✓", recipe_saved_recipe_path(recipe),
-        method: :delete, class: "btn btn-sm btn-success" %>
+  <%= button_to recipe_saved_recipe_path(recipe), method: :delete,
+        class: ["btn btn-pill btn-save btn-saved", size_class],
+        aria: { pressed: true, label: "Saved. Remove from saved recipes" } do %>
+    <%= icon(:bookmark, size: 15, fill: "currentColor") %> Saved
+  <% end %>
 <% else %>
-  <%= button_to "Save recipe", recipe_saved_recipe_path(recipe),
-        method: :post, class: "btn btn-sm btn-outline-primary" %>
+  <%= button_to recipe_saved_recipe_path(recipe), method: :post,
+        class: ["btn btn-pill btn-save btn-outline-primary", size_class],
+        aria: { pressed: false } do %>
+    <%= icon(:bookmark, size: 15) %> <%= local_assigns[:size] == :lg ? "Save recipe" : "Save" %>
+  <% end %>
 <% end %>

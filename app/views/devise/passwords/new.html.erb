@@ -1,0 +1,31 @@
+<% content_for :title, "Forgot your password?" %>
+
+<%= link_to new_session_path(resource_name), class: "back-link align-self-start" do %>
+  <%= icon(:arrow_left) %> Back to log in
+<% end %>
+
+<div>
+  <h1>Forgot your password?</h1>
+  <p class="text-body-secondary mb-0">Enter the email you signed up with and we'll send you a link to reset it.</p>
+</div>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name),
+      html: { method: :post, class: "auth__form" }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div>
+    <%= f.label :email, class: "form-label form-label--sm" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "you@example.com",
+          class: ["form-control", ("is-invalid" if resource.errors[:email].any?)] %>
+  </div>
+
+  <%= f.submit "Send me reset password instructions", class: "btn btn-primary" %>
+<% end %>
+
+<p class="auth__switch">
+  Remembered it? <%= link_to "Log in", new_session_path(resource_name) %>
+  <% if devise_mapping.registerable? %>
+    · <%= link_to "Create an account", new_registration_path(resource_name) %>
+  <% end %>
+</p>
+<%= render "devise/shared/links" %>

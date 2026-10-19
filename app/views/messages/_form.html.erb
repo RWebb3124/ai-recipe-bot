@@ -1,7 +1,10 @@
-<%= form_with url: chat_messages_path(chat), class: "mt-4" do |f| %>
-  <%= f.label :content, "Ask for a change", class: "form-label" %>
-  <%= f.text_field :content, required: true, class: "form-control mb-2",
-        placeholder: "Make it vegetarian, no oven, under 20 minutes..." %>
-  <%= f.submit "Ask", class: "btn btn-primary",
-        data: { turbo_submits_with: "Thinking..." } %>
+<%= form_with url: chat_messages_path(chat), class: "form-card form-card--compact mt-4" do |f| %>
+  <%= f.label :content, "Ask for a change", class: "form-label mb-0" %>
+  <div class="inline-form">
+    <%= f.text_field :content, required: true, class: "form-control",
+          placeholder: "Make it vegetarian, no oven, under 20 minutes..." %>
+    <%= f.submit "Ask", class: "btn btn-primary",
+          data: { turbo_submits_with: "Thinking..." } %>
+  </div>
+  <span class="hint">You'll get 3 new ideas that take your request into account.</span>
 <% end %>

@@ -1,0 +1,63 @@
+<% content_for :title, "Account" %>
+
+<main class="page page--narrow">
+  <h1 class="page-title">Account</h1>
+  <p class="page-subtitle">Update your email or password.</p>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name),
+        html: { method: :put, class: "form-card", data: { controller: "password-visibility" } }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div>
+      <%= f.label :email, class: "form-label form-label--sm" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email",
+            class: ["form-control", ("is-invalid" if resource.errors[:email].any?)] %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div class="form-text">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= f.label :password, class: "form-label form-label--sm" do %>
+        New password <span class="optional">(leave blank to keep your current one)</span>
+      <% end %>
+      <%= render "devise/shared/password_field", f: f, field: :password, autocomplete: "new-password",
+            describedby: ("password-hint" if @minimum_password_length) %>
+      <% if @minimum_password_length %>
+        <div id="password-hint" class="form-text"><%= @minimum_password_length %> characters minimum</div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= f.label :password_confirmation, "Confirm new password", class: "form-label form-label--sm" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password",
+            class: ["form-control", ("is-invalid" if resource.errors[:password_confirmation].any?)],
+            data: { password_visibility_target: "input" } %>
+    </div>
+
+    <div>
+      <%= f.label :current_password, class: "form-label form-label--sm" %>
+      <%= f.password_field :current_password, autocomplete: "current-password",
+            class: ["form-control", ("is-invalid" if resource.errors[:current_password].any?)],
+            aria: { describedby: "current-password-hint" } %>
+      <div id="current-password-hint" class="form-text">We need your current password to confirm your changes.</div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Update", class: "btn btn-primary" %>
+      <%= link_to "Cancel", root_path, class: "btn btn-ghost" %>
+    </div>
+  <% end %>
+
+  <section class="card mt-5">
+    <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div>
+        <h2 class="h5 mb-1">Delete account</h2>
+        <p class="hint mb-0" style="font-size: 0.875rem;">This removes your searches, saved recipes and pantry.</p>
+      </div>
+      <%= button_to "Delete my account", registration_path(resource_name), method: :delete,
+            class: "btn btn-pill btn-danger-outline",
+            data: { confirm: "Are you sure?", turbo_confirm: "Delete your account? This can't be undone." } %>
+    </div>
+  </section>
+</main>

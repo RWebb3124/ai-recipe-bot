@@ -1,0 +1,28 @@
+// Brand palette
+$fuchsia-plum: #C54B8C;
+$mint-cream:   #F5FFFA;
+$space-indigo: #34344A;
+$light-bronze: #C89B7B;
+$dark-cyan:    #129490;
+
+// Accessible shades of the palette, used wherever the colour is text or
+// sits behind white text (the base shades fall just under 4.5:1 contrast).
+$plum-600: #B8407F; // buttons, links
+$plum-700: #9E356B; // hover, plum text on tints
+$cyan-700: #0E7A77; // teal text
+$red-700:  #A3324A; // errors, destructive actions
+
+// Neutrals and tints
+$white:        #FFFFFF;
+$text-muted:   #5A5A6E;
+$field-bg:     #FBFFFD;
+$plum-tint:    #F8E6EF;
+$cyan-tint:    #E3F4F3;
+$bronze-tint:  #F6EDE6;
+$bronze-line:  #E3CDBD;
+$bronze-ink:   #A8775A; // star outlines
+$red-tint:     #FBEAEE;
+$hairline:     rgba($space-indigo, 0.10);
+$field-border: rgba($space-indigo, 0.20);
+$focus-ring:   rgba($dark-cyan, 0.22);
+$card-shadow:  0 1px 2px rgba($space-indigo, 0.04), 0 10px 28px -14px rgba($space-indigo, 0.14);
