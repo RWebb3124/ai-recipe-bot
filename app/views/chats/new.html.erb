@@ -1,24 +1,42 @@
-<div class="container my-5" style="max-width: 720px;">
-  <h1 class="mb-2">What's in your kitchen?</h1>
-  <p class="text-muted mb-4">
-    List what you have and I'll suggest recipes you can make.
-  </p>
+<% content_for :title, "New search" %>
 
-  <%= form_with model: @chat, url: chats_path do |f| %>
-    <div class="mb-3">
-      <%= f.label :ingredients_input, "Ingredients", class: "form-label fw-semibold" %>
+<main class="page page--hero">
+  <p class="eyebrow">Cook with what you have</p>
+  <h1 class="page-title page-title--hero">What's in your kitchen?</h1>
+  <p class="page-subtitle page-subtitle--lg">List what you have and I'll suggest recipes you can make.</p>
+
+  <%= form_with model: @chat, url: chats_path, class: "form-card" do |f| %>
+    <div>
+      <div class="label-row">
+        <%= f.label :ingredients_input, "Ingredients", class: "form-label" %>
+        <% if current_user.pantry_items.any? %>
+          <span class="hint">Prefilled from your pantry · <%= link_to "Edit pantry", pantry_items_path %></span>
+        <% end %>
+      </div>
       <%= f.text_area :ingredients_input, rows: 5, required: true, class: "form-control",
-            placeholder: "eggs, spinach, feta, tortillas" %>
-      <div class="form-text">Separate with commas or new lines.</div>
+            placeholder: "eggs, spinach, feta, tortillas",
+            aria: { describedby: "ingredients-hint" } %>
+      <div id="ingredients-hint" class="form-text">Separate with commas or new lines.</div>
     </div>
 
-    <div class="mb-4">
-      <%= label_tag :preferences, "Anything else? (optional)", class: "form-label" %>
+    <div>
+      <%= label_tag :preferences, class: "form-label" do %>
+        Anything else? <span class="optional">(optional)</span>
+      <% end %>
       <%= text_field_tag :preferences, params[:preferences], class: "form-control",
             placeholder: "vegetarian, under 30 minutes, no oven" %>
     </div>
 
-    <%= f.submit "Find recipes", class: "btn btn-primary btn-lg",
-          data: { turbo_submits_with: "Cooking up ideas..." } %>
+    <div class="form-actions">
+      <%= f.button class: "btn btn-primary btn-lg btn-icon-end",
+            data: { turbo_submits_with: "Cooking up ideas..." } do %>
+        Find recipes <%= icon(:arrow_right, size: 18, stroke_width: 2.2) %>
+      <% end %>
+      <span class="hint">You'll get 3 recipe ideas.</span>
+    </div>
   <% end %>
-</div>
+
+  <p class="mt-4 small text-body-secondary">
+    Looking for something you made before? <%= link_to "Browse past searches", chats_path %>
+  </p>
+</main>

@@ -1,26 +1,27 @@
 <%# locals: pantry_item %>
-<%= form_with model: pantry_item do |f| %>
+<%= form_with model: pantry_item, class: "d-flex flex-column gap-3" do |f| %>
   <% if pantry_item.errors.any? %>
-    <div class="alert alert-danger">
-      <%= pantry_item.errors.full_messages.to_sentence %>
+    <div class="flash flash--alert" role="alert">
+      <%= icon(:alert) %>
+      <span><%= pantry_item.errors.full_messages.to_sentence %></span>
     </div>
   <% end %>
 
-  <div class="row g-2 align-items-end">
-    <div class="col-12 col-md-5">
-      <%= f.label :name, "Item", class: "form-label small" %>
-      <%= f.text_field :name, required: true, class: "form-control",
+  <div class="field-row">
+    <div class="field field--grow">
+      <%= f.label :name, "Item", class: "form-label form-label--sm" %>
+      <%= f.text_field :name, required: true, class: ["form-control", ("is-invalid" if pantry_item.errors[:name].any?)],
             placeholder: "e.g. eggs, spinach, rice" %>
     </div>
 
-    <div class="col-6 col-md-2">
-      <%= f.label :quantity, "Amount", class: "form-label small" %>
+    <div class="field">
+      <%= f.label :quantity, "Amount", class: "form-label form-label--sm" %>
       <%= f.number_field :quantity, step: "any", min: 0, class: "form-control",
             value: format_amount(pantry_item.quantity) %>
     </div>
 
-    <div class="col-6 col-md-3">
-      <%= f.label :unit, "Unit", class: "form-label small" %>
+    <div class="field">
+      <%= f.label :unit, "Unit", class: "form-label form-label--sm" %>
       <%= f.text_field :unit, list: "pantry-units", class: "form-control",
             placeholder: "optional" %>
       <datalist id="pantry-units">
@@ -30,11 +31,17 @@
       </datalist>
     </div>
 
-    <div class="col-12 col-md-2 d-flex gap-2">
-      <%= f.submit pantry_item.new_record? ? "Add" : "Update", class: "btn btn-primary flex-grow-1" %>
-      <% unless pantry_item.new_record? %>
-        <%= link_to "Cancel", pantry_items_path, class: "btn btn-outline-secondary" %>
-      <% end %>
-    </div>
+    <% if pantry_item.new_record? %>
+      <div class="field-actions">
+        <%= f.submit "Add", class: "btn btn-primary" %>
+      </div>
+    <% end %>
   </div>
+
+  <% unless pantry_item.new_record? %>
+    <div class="form-actions">
+      <%= f.submit "Update", class: "btn btn-primary" %>
+      <%= link_to "Cancel", pantry_items_path, class: "btn btn-ghost" %>
+    </div>
+  <% end %>
 <% end %>

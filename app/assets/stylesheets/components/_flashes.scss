@@ -1,0 +1,41 @@
+.flash {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  border-radius: $border-radius;
+  padding: 0.625rem 1rem;
+  border: 1px solid;
+
+  &--notice {
+    color: $cyan-700;
+    background: $cyan-tint;
+    border-color: rgba($dark-cyan, 0.25);
+  }
+
+  &--alert {
+    color: $red-700;
+    background: $red-tint;
+    border-color: rgba($red-700, 0.25);
+  }
+}
+
+.flashes {
+  max-width: 800px;
+  margin: 1.25rem auto 0;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-errors {
+  font-size: 0.875rem;
+  color: $red-700;
+  background: $red-tint;
+  border: 1px solid rgba($red-700, 0.25);
+  border-radius: 0.625rem;
+  padding: 0.75rem 1rem;
+
+  ul { margin: 0.375rem 0 0; padding-left: 1.125rem; }
+}

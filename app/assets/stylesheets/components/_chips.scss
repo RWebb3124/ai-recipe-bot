@@ -1,0 +1,45 @@
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+// Ingredient chips
+.chip {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: $bronze-tint;
+  border: 1px solid $bronze-line;
+  color: $space-indigo;
+  line-height: 1.5;
+
+  &--more {
+    background: transparent;
+    border-style: dashed;
+    border-color: rgba($space-indigo, 0.25);
+    color: $text-muted;
+  }
+
+  &--solid {
+    background: $light-bronze;
+    border-color: $light-bronze;
+    font-weight: 500;
+  }
+}
+
+// Status pills
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.1875rem 0.75rem;
+  border-radius: 999px;
+  white-space: nowrap;
+
+  &--success { background: $cyan-tint; color: $cyan-700; }
+  &--need    { background: $plum-tint; color: $plum-700; }
+  &--amount  { background: $bronze-tint; color: $text-muted; font-weight: 400; font-size: 0.875rem; padding: 0.0625rem 0.625rem; }
+  &--sm      { font-size: 0.75rem; font-weight: 600; padding: 0.125rem 0.625rem; }
+}

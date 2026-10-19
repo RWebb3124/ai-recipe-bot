@@ -1,21 +1,46 @@
-<div class="container my-4" style="max-width: 800px;">
-  <h1 class="h3 mb-4">Past searches</h1>
+<% content_for :title, "Past searches" %>
+
+<main class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Past searches</h1>
+      <p class="page-subtitle"><%= pluralize(@chats.size, "search") %></p>
+    </div>
+    <%= link_to root_path, class: "btn btn-primary btn-icon-start" do %>
+      <%= icon(:plus, size: 18, stroke_width: 2.2) %> New search
+    <% end %>
+  </div>
 
   <% if @chats.any? %>
-    <div class="list-group">
+    <ul class="list-card">
       <% @chats.each do |chat| %>
-        <%= link_to chat_path(chat), class: "list-group-item list-group-item-action" do %>
-          <div class="d-flex justify-content-between">
-            <span><%= truncate(chat.ingredients_input.to_s, length: 80) %></span>
-            <small class="text-muted"><%= time_ago_in_words(chat.created_at) %> ago</small>
-          </div>
-          <small class="text-muted"><%= pluralize(chat.recipes.size, "recipe") %></small>
-        <% end %>
+        <% ingredients = chat.ingredients_input.to_s.split(/[,\n]/).map(&:strip).compact_blank %>
+        <li>
+          <%= link_to chat_path(chat), class: "history-row" do %>
+            <div class="history-row__body">
+              <div class="chip-list" style="gap: 0.375rem;">
+                <% ingredients.first(5).each do |item| %>
+                  <span class="chip"><%= item %></span>
+                <% end %>
+                <% if ingredients.size > 5 %>
+                  <span class="chip chip--more">+<%= ingredients.size - 5 %> more</span>
+                <% end %>
+              </div>
+              <div class="meta-list">
+                <span><%= icon(:book, size: 15) %><%= pluralize(chat.recipes.size, "recipe") %></span>
+                <span><%= icon(:clock, size: 15) %><%= time_ago_in_words(chat.created_at) %> ago</span>
+              </div>
+            </div>
+            <%= icon(:chevron_right, size: 20, class: "history-row__arrow") %>
+          <% end %>
+        </li>
       <% end %>
-    </div>
+    </ul>
   <% else %>
-    <p class="text-muted">
-      Nothing yet. <%= link_to "Start your first search", root_path %>.
-    </p>
+    <div class="empty-state">
+      <span class="empty-state__icon empty-state__icon--cyan"><%= icon(:clock, size: 24) %></span>
+      <h2>No searches yet</h2>
+      <p>Nothing yet. <%= link_to "Start your first search", root_path %>.</p>
+    </div>
   <% end %>
-</div>
+</main>

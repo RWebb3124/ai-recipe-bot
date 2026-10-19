@@ -1,41 +1,53 @@
-<div class="container my-4" style="max-width: 800px;">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">My pantry</h1>
+<% content_for :title, "My pantry" %>
+
+<main class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My pantry</h1>
+      <p class="page-subtitle"><%= pluralize(@pantry_items.size, "item") %> · prefilled on the homepage when you search.</p>
+    </div>
     <% if @pantry_items.any? %>
-      <%= link_to "Find recipes with these", root_path, class: "btn btn-primary" %>
+      <%= link_to root_path, class: "btn btn-primary btn-icon-end" do %>
+        Find recipes with these <%= icon(:arrow_right, size: 18, stroke_width: 2.2) %>
+      <% end %>
     <% end %>
   </div>
 
-  <div class="card mb-4">
-    <div class="card-body">
-      <%= render "form", pantry_item: PantryItem.new %>
-    </div>
+  <div class="form-card form-card--compact mb-4">
+    <h2 class="form-card__title">Add an item</h2>
+    <%= render "form", pantry_item: PantryItem.new %>
   </div>
 
   <% if @pantry_items.any? %>
-    <ul class="list-group">
+    <ul class="list-card">
       <% @pantry_items.each do |item| %>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <span>
+        <li class="list-row">
+          <span class="list-row__name">
+            <span class="dot" aria-hidden="true"></span>
             <%= item.name %>
             <% amount = [format_amount(item.quantity), item.unit].compact_blank.join(" ") %>
             <% if amount.present? %>
-              <span class="text-muted ms-2"><%= amount %></span>
+              <span class="pill pill--amount"><%= amount %></span>
             <% end %>
           </span>
 
-          <span class="d-flex gap-2">
-            <%= link_to "Edit", edit_pantry_item_path(item), class: "btn btn-sm btn-outline-secondary" %>
+          <span class="list-row__actions">
+            <%= link_to "Edit", edit_pantry_item_path(item), class: "btn btn-pill btn-ghost" %>
             <%= button_to "Delete", pantry_item_path(item), method: :delete,
-                  class: "btn btn-sm btn-outline-danger" %>
+                  class: "btn btn-pill btn-danger-outline",
+                  aria: { label: "Delete #{item.name}" } %>
           </span>
         </li>
       <% end %>
     </ul>
   <% else %>
-    <p class="text-muted">
-      Nothing here yet. Add what you keep in the kitchen and it will be
-      prefilled on the homepage whenever you want recipe ideas.
-    </p>
+    <div class="empty-state">
+      <span class="empty-state__icon"><%= icon(:bag, size: 26, stroke_width: 1.8) %></span>
+      <h2>Your pantry is empty</h2>
+      <p>
+        Add what you keep in the kitchen and it will be prefilled on the
+        homepage whenever you want recipe ideas.
+      </p>
+    </div>
   <% end %>
-</div>
+</main>

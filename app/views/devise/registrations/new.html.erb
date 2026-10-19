@@ -1,0 +1,38 @@
+<% content_for :title, "Sign up" %>
+
+<div>
+  <h1>Create your account</h1>
+  <p class="text-body-secondary mb-0">Save recipes and keep a pantry that's ready for every search.</p>
+</div>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name),
+      html: { class: "auth__form", data: { controller: "password-visibility" } }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div>
+    <%= f.label :email, class: "form-label form-label--sm" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "you@example.com",
+          class: ["form-control", ("is-invalid" if resource.errors[:email].any?)] %>
+  </div>
+
+  <div>
+    <%= f.label :password, class: "form-label form-label--sm" %>
+    <%= render "devise/shared/password_field", f: f, field: :password, autocomplete: "new-password",
+          describedby: ("password-hint" if @minimum_password_length) %>
+    <% if @minimum_password_length %>
+      <div id="password-hint" class="form-text"><%= @minimum_password_length %> characters minimum</div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation, class: "form-label form-label--sm" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password",
+          class: ["form-control", ("is-invalid" if resource.errors[:password_confirmation].any?)],
+          data: { password_visibility_target: "input" } %>
+  </div>
+
+  <%= f.submit "Sign up", class: "btn btn-primary mt-1" %>
+<% end %>
+
+<p class="auth__switch">Already have an account? <%= link_to "Log in", new_session_path(resource_name) %></p>
+<%= render "devise/shared/links" %>

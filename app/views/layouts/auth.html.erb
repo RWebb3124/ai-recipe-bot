@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= content_for?(:title) ? "#{yield(:title)} · Recipe Helper" : "Recipe Helper" %></title>
+    <%= render "layouts/head" %>
+  </head>
+
+  <body>
+    <div class="auth">
+      <aside class="auth__panel">
+        <%= link_to root_path, class: "brand brand--light" do %>
+          <span class="brand-mark"><%= icon(:logo, size: 18) %></span>
+          Recipe Helper
+        <% end %>
+
+        <div class="auth__pitch">
+          <div class="chip-list" aria-hidden="true">
+            <span class="chip chip--solid">eggs</span>
+            <span class="chip chip--solid">spinach</span>
+            <span class="chip chip--solid">feta</span>
+            <span class="chip chip--more">+ what else you have</span>
+          </div>
+          <h2>Cook with what's already in your kitchen.</h2>
+          <ul>
+            <li><span class="dot dot--cyan"></span>Recipe ideas from the ingredients you list</li>
+            <li><span class="dot dot--plum"></span>Save favourites with your own notes and ratings</li>
+            <li><span class="dot"></span>A pantry that prefills every search</li>
+          </ul>
+        </div>
+
+        <span class="auth__footnote">Nutrition figures are AI-generated estimates.</span>
+      </aside>
+
+      <main class="auth__main">
+        <div class="auth__content">
+          <% flash.each do |type, message| %>
+            <div class="flash flash--<%= type.to_s == "notice" ? "notice" : "alert" %>" role="<%= type.to_s == "notice" ? "status" : "alert" %>">
+              <%= icon(type.to_s == "notice" ? :check : :alert) %>
+              <span><%= message %></span>
+            </div>
+          <% end %>
+          <%= yield %>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,8 +1,13 @@
-<div class="container my-4" style="max-width: 800px;">
-  <div class="mb-3 small">
-    <%= link_to "← Back to pantry", pantry_items_path %>
-  </div>
+<% content_for :title, "Add pantry item" %>
 
-  <h1 class="h3 mb-4">Add pantry item</h1>
-  <%= render "form", pantry_item: @pantry_item %>
-</div>
+<main class="page page--narrow">
+  <%= link_to pantry_items_path, class: "back-link" do %>
+    <%= icon(:arrow_left) %> Back to pantry
+  <% end %>
+
+  <h1 class="page-title mt-3 mb-4">Add pantry item</h1>
+
+  <div class="form-card">
+    <%= render "form", pantry_item: @pantry_item %>
+  </div>
+</main>

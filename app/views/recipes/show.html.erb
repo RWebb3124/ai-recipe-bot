@@ -1,84 +1,93 @@
-<div class="container my-4">
-  <div class="mb-3 small">
-    <%= link_to "← Back to results", chat_path(@recipe.chat) %>
-    <span class="text-muted mx-2">|</span>
-    <%= link_to "My saved recipes", saved_recipes_path %>
+<% content_for :title, @recipe.title %>
+
+<main class="page page--wide">
+  <div class="d-flex flex-wrap align-items-center column-gap-4">
+    <%= link_to chat_path(@recipe.chat), class: "back-link" do %>
+      <%= icon(:arrow_left) %> Back to results
+    <% end %>
+    <%= link_to "My saved recipes", saved_recipes_path, class: "back-link" %>
   </div>
 
-  <div class="d-flex justify-content-between align-items-start gap-3">
-    <h1 class="mb-1"><%= @recipe.title %></h1>
-    <%= render "saved_recipes/toggle", recipe: @recipe, saved: @saved_recipe.present? %>
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mt-3">
+    <h1 class="page-title page-title--hero mb-0" style="flex: 1 1 480px;"><%= @recipe.title %></h1>
+    <%= render "saved_recipes/toggle", recipe: @recipe, saved: @saved_recipe.present?, size: :lg %>
   </div>
 
-  <p class="lead text-muted"><%= @recipe.description %></p>
+  <p class="fs-5 text-body-secondary mt-3 mb-0" style="max-width: 680px;"><%= @recipe.description %></p>
 
-  <div class="d-flex flex-wrap gap-4 mb-4 text-muted">
+  <div class="chip-list mt-4">
     <% if @recipe.prep_minutes.present? %>
-      <span>Prep: <%= @recipe.prep_minutes %> min</span>
+      <span class="meta-chip"><%= icon(:clock) %><span class="label">Prep</span> <strong><%= @recipe.prep_minutes %> min</strong></span>
     <% end %>
     <% if @recipe.cook_minutes.present? %>
-      <span>Cook: <%= @recipe.cook_minutes %> min</span>
+      <span class="meta-chip"><%= icon(:flame) %><span class="label">Cook</span> <strong><%= @recipe.cook_minutes %> min</strong></span>
     <% end %>
     <% if @recipe.servings.present? %>
-      <span>Serves: <%= @recipe.servings %></span>
+      <span class="meta-chip"><%= icon(:users) %><span class="label">Serves</span> <strong><%= @recipe.servings %></strong></span>
     <% end %>
   </div>
 
   <% if @saved_recipe&.notes.present? %>
-    <div class="alert alert-light border">
-      <strong>Your notes:</strong> <%= @saved_recipe.notes %>
+    <div class="note-box mt-4">
+      <%= icon(:pencil, size: 18) %>
+      <div><strong class="font-heading">Your notes:</strong> <%= @saved_recipe.notes %></div>
     </div>
   <% end %>
 
-  <div class="row g-4">
-    <div class="col-md-5">
-      <h2 class="h4">Ingredients</h2>
-      <ul class="list-unstyled">
-        <% @recipe.recipe_ingredients.each do |ingredient| %>
-          <li class="mb-2">
-            <%= [format_amount(ingredient.quantity), ingredient.unit].compact_blank.join(" ") %>
-            <%= ingredient.name %>
-            <% unless ingredient.in_pantry? %>
-              <span class="badge bg-warning text-dark ms-1">need</span>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+  <div class="recipe-layout">
+    <section class="card recipe-layout__ingredients">
+      <div class="card-body">
+        <h2 class="section-title">Ingredients</h2>
+        <ul class="ingredient-list">
+          <% @recipe.recipe_ingredients.each do |ingredient| %>
+            <li>
+              <span>
+                <strong class="fw-semibold"><%= [format_amount(ingredient.quantity), ingredient.unit].compact_blank.join(" ") %></strong>
+                <%= ingredient.name %>
+              </span>
+              <% unless ingredient.in_pantry? %>
+                <span class="pill pill--need pill--sm">Need</span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </section>
 
-    <div class="col-md-7">
-      <h2 class="h4">Instructions</h2>
-      <ol class="ps-3">
+    <section class="recipe-layout__steps">
+      <h2 class="section-title mt-1">Instructions</h2>
+      <ol class="step-list">
         <% Array(@recipe.instructions).each do |step| %>
-          <li class="mb-2"><%= step %></li>
+          <li><span class="step-list__text"><%= step %></span></li>
         <% end %>
       </ol>
-    </div>
+    </section>
   </div>
 
   <% if @recipe.calories.present? %>
-    <hr class="my-4">
-    <h2 class="h4">Estimated nutrition <span class="h6 text-muted">per serving</span></h2>
-    <div class="row text-center g-3 my-1">
-      <div class="col-6 col-md-3">
-        <div class="fs-4"><%= @recipe.calories %></div>
-        <div class="small text-muted">kcal</div>
+    <section class="nutrition">
+      <h2 class="section-title">
+        Estimated nutrition <span class="fs-6 fw-normal font-body text-body-secondary">per serving</span>
+      </h2>
+      <div class="stat-grid">
+        <div class="stat-tile">
+          <div class="stat-tile__value stat-tile__value--accent"><%= @recipe.calories %></div>
+          <div class="stat-tile__label">kcal</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value"><%= format_amount(@recipe.protein_g, precision: 1) || "-" %><small>g</small></div>
+          <div class="stat-tile__label">protein</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value"><%= format_amount(@recipe.carbs_g, precision: 1) || "-" %><small>g</small></div>
+          <div class="stat-tile__label">carbs</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value"><%= format_amount(@recipe.fat_g, precision: 1) || "-" %><small>g</small></div>
+          <div class="stat-tile__label">fat</div>
+        </div>
       </div>
-      <div class="col-6 col-md-3">
-        <div class="fs-4"><%= format_amount(@recipe.protein_g, precision: 1) || "-" %><small>g</small></div>
-        <div class="small text-muted">protein</div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="fs-4"><%= format_amount(@recipe.carbs_g, precision: 1) || "-" %><small>g</small></div>
-        <div class="small text-muted">carbs</div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="fs-4"><%= format_amount(@recipe.fat_g, precision: 1) || "-" %><small>g</small></div>
-        <div class="small text-muted">fat</div>
-      </div>
-    </div>
-    <p class="small text-muted mt-3">
-      Nutrition figures are AI-generated estimates, not exact values.
-    </p>
+      <p class="hint mt-3 mb-0">Nutrition figures are AI-generated estimates, not exact values.</p>
+    </section>
   <% end %>
-</div>
+</main>

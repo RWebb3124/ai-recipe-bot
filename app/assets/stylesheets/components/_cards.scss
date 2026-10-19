@@ -1,0 +1,132 @@
+.card {
+  box-shadow: $card-shadow;
+}
+
+.card-hover {
+  transition: box-shadow .15s, transform .15s;
+
+  &:hover {
+    box-shadow: 0 1px 2px rgba($space-indigo, 0.04), 0 16px 36px -14px rgba($space-indigo, 0.22);
+    transform: translateY(-1px);
+  }
+}
+
+.stack { display: flex; flex-direction: column; gap: 1rem; }
+
+// Rows inside one card (pantry, history)
+.list-card {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: $white;
+  border: 1px solid $hairline;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: $card-shadow;
+
+  > li + li { border-top: 1px solid rgba($space-indigo, 0.08); }
+}
+
+.list-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.625rem 1rem;
+  padding: 0.875rem 1.375rem;
+
+  &:hover { background: $field-bg; }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    font-weight: 500;
+  }
+
+  &__actions { display: flex; gap: 0.5rem; }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: $light-bronze;
+  flex-shrink: 0;
+
+  &--cyan { background: $dark-cyan; }
+  &--plum { background: $fuchsia-plum; }
+}
+
+.history-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.125rem 1.375rem;
+  color: $space-indigo;
+  transition: background .15s;
+
+  &:hover {
+    background: $field-bg;
+    color: $space-indigo;
+    text-decoration: none;
+
+    .history-row__arrow { color: $plum-600; transform: translateX(2px); }
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .chip { padding: 0.125rem 0.6875rem; }
+
+  &__arrow {
+    color: #9A9AAA;
+    transition: transform .15s, color .15s;
+  }
+}
+
+// Notes box (recipe page, saved list)
+.note-box {
+  display: flex;
+  gap: 0.625rem;
+  align-items: flex-start;
+  background: $bronze-tint;
+  border: 1px solid $bronze-line;
+  border-radius: 0.875rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+
+  .icon { margin-top: 0.25rem; }
+  p:last-child, div:last-child { margin-bottom: 0; }
+}
+
+.stat-tile {
+  background: $white;
+  border: 1px solid $hairline;
+  border-radius: 1rem;
+  padding: 1.125rem 1.25rem;
+
+  &__value {
+    font-family: $headings-font-family;
+    font-weight: 700;
+    font-size: 1.875rem;
+    line-height: 1.2;
+
+    small { font-size: 1.125rem; font-weight: 500; }
+    &--accent { color: $plum-700; }
+  }
+
+  &__label { font-size: 0.875rem; color: $text-muted; }
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.875rem;
+}
